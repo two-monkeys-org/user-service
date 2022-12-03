@@ -2,8 +2,11 @@ package org.monke.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.monke.userservice.converter.UserConverter;
-import org.monke.userservice.entity.Mail;
 import org.monke.userservice.entity.User;
+import org.monke.userservice.entity.request.AddUserRequest;
+import org.monke.userservice.entity.request.ChangePasswdRequest;
+import org.monke.userservice.entity.request.Credentials;
+import org.monke.userservice.entity.response.UserResponse;
 import org.monke.userservice.exception.EmailTakenException;
 import org.monke.userservice.exception.InvalidCredentialsException;
 import org.monke.userservice.exception.NoUserException;
@@ -12,13 +15,7 @@ import org.monke.userservice.repository.UserRepository;
 import org.monke.userservice.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.monke.userservice.entity.request.AddUserRequest;
-import org.monke.userservice.entity.request.ChangePasswdRequest;
-import org.monke.userservice.entity.request.Credentials;
-import org.monke.userservice.entity.response.UserResponse;
-import org.monke.userservice.service.EmailService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +24,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserConverter userConverter;
-    private final EmailService emailService;
+//    private final EmailService emailService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -39,11 +36,11 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userConverter.userOf(userRequest);
-        emailService.send(new Mail()
-                .setText("Welcome to comspk. Here is your tmp password: " + user.getPassword())
-                .setSubject("Welcome to HABSAT")
-                .setEmailFrom("noreply@cosmopk")
-                .setEmailTo(user.getEmail()));
+//        emailService.send(new Mail()
+//                .setText("Welcome to comspk. Here is your tmp password: " + user.getPassword())
+//                .setSubject("Welcome to HABSAT")
+//                .setEmailFrom("noreply@cosmopk")
+//                .setEmailTo(user.getEmail()));
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -55,7 +52,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void modifyPassword(ChangePasswdRequest changePasswdRequest) throws NoUserException, PasswordMismatchException {
         final String email = changePasswdRequest.getEmail();
 

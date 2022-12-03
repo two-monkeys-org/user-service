@@ -10,11 +10,10 @@ import java.util.List;
 
 @NoArgsConstructor
 public class DummyData {
-    private Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
     public User getUser() {
         return new User()
-                .setId(100L)
                 .setFirstLogin(true)
                 .setPassword(faker.chuckNorris().fact())
                 .setEmail(faker.internet().emailAddress())

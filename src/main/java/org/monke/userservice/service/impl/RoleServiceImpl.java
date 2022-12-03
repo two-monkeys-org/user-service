@@ -1,17 +1,16 @@
 package org.monke.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.monke.userservice.entity.User;
-import org.monke.userservice.exception.NoUserException;
-import org.monke.userservice.repository.UserRepository;
-import org.springframework.stereotype.Service;
 import org.monke.userservice.converter.RoleConverter;
+import org.monke.userservice.entity.User;
 import org.monke.userservice.entity.request.AddRolesRequest;
 import org.monke.userservice.entity.request.ChangeRoleRequest;
 import org.monke.userservice.exception.NoRoleException;
+import org.monke.userservice.exception.NoUserException;
+import org.monke.userservice.repository.UserRepository;
 import org.monke.userservice.service.RoleService;
+import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -24,7 +23,6 @@ public class RoleServiceImpl implements RoleService {
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
     public void addRole(ChangeRoleRequest changeRoleRequest) throws NoUserException {
         final String email = changeRoleRequest.getEmail();
 
@@ -42,7 +40,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    @Transactional
     public void addAllRoles(AddRolesRequest addRolesRequest) throws NoUserException {
         final String email = addRolesRequest.getEmail();
 

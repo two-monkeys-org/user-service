@@ -1,19 +1,14 @@
 spring:
   application:
     name: 'user-service'
-  jpa:
-    hibernate:
-      ddl-auto: validate
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  devtools:
-    livereload:
-      enabled: true
   profiles:
     active: 'all'
-  config:
-    import: 'configserver:http://localhost:8061'
+  data:
+    mongodb:
+      uri: 'mongodb://localhost:27017/user'
 server:
   error:
     include-message: always

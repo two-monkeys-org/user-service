@@ -19,4 +19,6 @@ public class AddUserRequest {
 
     @Email
     private String email;
+
+    private String password;
 }

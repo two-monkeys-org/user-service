@@ -1,26 +1,22 @@
 package org.monke.userservice.converter;
 
-import lombok.RequiredArgsConstructor;
 import org.monke.userservice.entity.User;
-import org.monke.userservice.utils.RandomPasswordGenerator;
-import org.springframework.stereotype.Component;
 import org.monke.userservice.entity.request.AddUserRequest;
 import org.monke.userservice.entity.response.UserResponse;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
 public class UserConverter {
-    private final RandomPasswordGenerator randomPasswordGenerator;
 
     public User userOf(AddUserRequest addUserRequest) {
         return new User()
                 .setName(addUserRequest.getName())
                 .setSurname(addUserRequest.getSurname())
                 .setEmail(addUserRequest.getEmail())
-                .setPassword(randomPasswordGenerator.generateRandomPassword())
+                .setPassword(addUserRequest.getPassword())
                 .setFirstLogin(true)
                 .setRoles("USER");
     }
