@@ -2,9 +2,6 @@ package org.monke.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.monke.userservice.entity.request.AddUserRequest;
 import org.monke.userservice.entity.request.ChangePasswdRequest;
 import org.monke.userservice.entity.request.Credentials;
@@ -12,6 +9,10 @@ import org.monke.userservice.entity.response.UserResponse;
 import org.monke.userservice.exception.EmailTakenException;
 import org.monke.userservice.exception.NoUserException;
 import org.monke.userservice.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,8 +25,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserResponse> findAllUsers() {
-        return userService.getUsers();
+    public ResponseEntity<List<UserResponse>> findAllUsers() {
+        return ResponseEntity.ok()
+                .header("NAMESPACE", "FETCH_USERS")
+                .body(userService.getUsers());
     }
 
     @GetMapping("/{email}")
